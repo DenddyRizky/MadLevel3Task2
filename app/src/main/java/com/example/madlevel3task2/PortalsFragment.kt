@@ -1,17 +1,24 @@
 package com.example.madlevel3task2
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.GridLayout
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import kotlinx.android.synthetic.main.fragment_portals.*
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
+
 class PortalsFragment : Fragment() {
+    private val portals = arrayListOf<Portal>()
+    private val portalAdapter = PortalAdapter(portals)
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -24,5 +31,25 @@ class PortalsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initViews()
+    }
+
+    private fun initViews(){
+        rvPortals.layoutManager = StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL)
+        rvPortals.adapter = portalAdapter
+        rvPortals.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+
+        addPortalResult()
+    }
+
+    private fun addPortalResult(){
+        setFragmentResultListener(REQ_PORTAL_KEY) { key, bundle ->
+            bundle.getString(BUNDLE_PORTAL_KEY)?.let {
+                val portal = Portal(it,it)
+
+                portals.add(portal)
+                portalAdapter.notifyDataSetChanged()
+            } ?: Log.e("PortalFragment", "Request triggered, but empty Portal URL text!")
+        }
     }
 }

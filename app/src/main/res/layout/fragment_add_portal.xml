@@ -27,6 +27,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTitle">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPortalTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -41,6 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvUrl">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPortalUrl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
