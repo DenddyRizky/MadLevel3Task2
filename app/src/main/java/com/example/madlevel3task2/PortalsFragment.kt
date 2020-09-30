@@ -37,19 +37,20 @@ class PortalsFragment : Fragment() {
     private fun initViews(){
         rvPortals.layoutManager = StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL)
         rvPortals.adapter = portalAdapter
-        rvPortals.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         addPortalResult()
     }
 
     private fun addPortalResult(){
         setFragmentResultListener(REQ_PORTAL_KEY) { key, bundle ->
-            bundle.getString(BUNDLE_PORTAL_KEY)?.let {
-                val portal = Portal(it,it)
+            val portalTitle = bundle.getString(BUNDLE_PORTAL_TITLE)
+            val portalUrl = bundle.getString(BUNDLE_PORTAL_URL)
+            if(!portalTitle.isNullOrBlank() && !portalUrl.isNullOrBlank()) {
+                val portal = Portal(portalTitle, portalUrl)
 
                 portals.add(portal)
                 portalAdapter.notifyDataSetChanged()
-            } ?: Log.e("PortalFragment", "Request triggered, but empty Portal URL text!")
+            }
         }
     }
 }
