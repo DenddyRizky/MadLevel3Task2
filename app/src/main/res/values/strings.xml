@@ -12,4 +12,5 @@
     <string name="text_title">Title</string>
     <string name="text_url">Url</string>
     <string name="button_add_portal">ADD PORTAL</string>
+    <string name="text_http">http://</string>
 </resources>
